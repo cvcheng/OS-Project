@@ -129,6 +129,10 @@ public class os {
 			runningCPU = false;
 
 			timeRan = 0;
+
+			//remove program from memory
+			for (int i=job.startAddress; i<job.size; i++)
+				memory[i] = 0;
 		}
 		else if (a[0] == 6) { //job is requesting another disk I/O
 			System.out.println("job requesting another disk I/O");
@@ -183,6 +187,10 @@ public class os {
 				job.startAddress = start;
 				jobWaitingForMemory = job.number;
 				System.out.println("address: " + job.startAddress + " size: " + job.size); //debug
+				for (int j=start; j<count; j++)
+					memory[j] = job.number;
+				for (int j=0; j<100; j++)
+					System.out.print(memory[j] + " ");
 				sos.siodrum(job.number, job.size, start, 0);
 				break;
 			}
